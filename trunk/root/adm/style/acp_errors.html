@@ -1,0 +1,63 @@
+<!-- INCLUDE overall_header.html -->
+
+<h1>{L_HTTP_ERRORS}</h1>
+<p>{L_HTTP_ERRORS_DESC}</p>
+
+<!-- IF PAGINATION -->
+<div class="pagination">
+		<a href="#" onclick="jumpto(); return false;" title="{L_JUMP_TO_PAGE}">{S_ON_PAGE}</a> &bull; <span>{PAGINATION}</span>
+</div>
+<!-- ENDIF -->
+
+<form id="list" method="post" action="{U_ACTION}">
+<!-- IF .error_row -->
+<table cellspacing="1">
+<thead>
+<tr>
+	<th>{L_IP}/{L_TIME}</th>
+	<th>{L_ERRORTYPE}</th>
+	<th>{L_REQUEST_PAGE}/{L_REFERER}</th>
+	<th>{L_MARK}</th>
+</tr>
+</thead>
+<tbody>
+
+<!-- BEGIN error_row -->
+	<!-- IF error_row.S_ROW_COUNT is even --><tr class="row1"><!-- ELSE --><tr class="row2"><!-- ENDIF -->
+	<td><span title="{error_row.HOST}">{error_row.IP}</span><br />{error_row.TIME}</td>
+	<td>{error_row.TYPE}</td>
+	<td>{error_row.PAGE}<br /><a href="{error_row.REFERER}">{error_row.REFERER}</a></td>
+	<td style="text-align: center;"><input type="checkbox" class="radio" name="mark[]" value="{error_row.ID}" /></td>
+</tr>
+<!-- END error_row -->
+</tbody>
+</table>
+<!-- ELSE -->
+<div class="errorbox">
+	<p>{L_NO_ENTRIES}</p>
+</div>
+<!-- ENDIF -->
+
+<fieldset class="display-options">
+	{L_DISPLAY_LOG}: &nbsp;{S_LIMIT_DAYS}&nbsp;{L_SORT_BY}: {S_SORT_KEY} {S_SORT_DIR}
+	<input class="button2" type="submit" value="{L_GO}" name="sort" />
+	{S_FORM_TOKEN}
+</fieldset>
+<hr />
+
+<!-- IF PAGINATION -->
+<div class="pagination">
+		<a href="#" onclick="jumpto(); return false;" title="{L_JUMP_TO_PAGE}">{S_ON_PAGE}</a> &bull; <span>{PAGINATION}</span>
+</div>
+<!-- ENDIF -->
+<fieldset class="quick">
+	<input class="button2" type="submit" name="delall" value="{L_DELETE_ALL}" />&nbsp;
+	<input class="button2" type="submit" name="delmarked" value="{L_DELETE_MARKED}" /><br />
+	<p class="small"><a href="#" onclick="marklist('list', 'mark', true); return false;">{L_MARK_ALL}</a> &bull; <a href="#" onclick="marklist('list', 'mark', false); return false;">{L_UNMARK_ALL}</a></p>
+</fieldset>
+
+</form>
+
+<br />
+
+<!-- INCLUDE overall_footer.html -->
