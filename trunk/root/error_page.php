@@ -4,7 +4,7 @@
 * @author Tobi Schaefer http://www.tas2580.de/
 *
 * @package phpbb
-* @version $Id: error_page.php, v 1.0.0 2009/01/19 16:43:33 tas2580 Exp $
+* @version $Id: error_page.php, v 1.0.1 2009/01/19 16:43:33 tas2580 Exp $
 * @copyright (c) 2007 SEO phpBB http://www.phpbb-seo.de
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License 
 *
@@ -26,11 +26,11 @@ $user->setup('mods/errors');
 $type	= request_var('type', 500);
 
 $sql_ary = array(
-	'ip'			=> isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '',
+	'ip'			=> isset($_SERVER['REMOTE_ADDR']) ? htmlspecialchars($_SERVER['REMOTE_ADDR']) : '',
 	'type'			=> $type,
 	'error_time'	=> time(),
-	'referer'		=> isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '',
-	'page'			=> isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '',
+	'referer'		=> isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : '',
+	'page'			=> isset($_SERVER['REQUEST_URI']) ? htmlspecialchars($_SERVER['REQUEST_URI']) : '',
 );
 $db->sql_query('INSERT INTO ' . HTTPERRORS_TABLE .' ' . $db->sql_build_array('INSERT', $sql_ary));
 
